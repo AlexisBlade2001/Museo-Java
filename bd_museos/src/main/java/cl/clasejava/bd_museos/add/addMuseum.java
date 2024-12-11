@@ -27,10 +27,11 @@ public class addMuseum extends JForm {
 
             // Crear un modelo para el JComboBox
             DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
+            
+            comboBoxModel.addElement("Seleccione un pais");
             // Agregar los países al modelo del JComboBox
             while (resultSet.next()) {
-                String pais = resultSet.getString("nombre");
+                String pais = resultSet.getString("nomPais");
                 comboBoxModel.addElement(pais);
             }
 
