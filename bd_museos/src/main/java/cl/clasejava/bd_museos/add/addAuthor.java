@@ -18,6 +18,7 @@ public class addAuthor extends JForm {
         initComponents();
         conexionBD = ConexionBD.getInstancia();
         getPaises();
+        getSexo();
     }
 
     private void getPaises() {
@@ -29,10 +30,10 @@ public class addAuthor extends JForm {
 
                 // Crear un modelo para el JComboBox
                 DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
+                comboBoxModel.addElement("Seleccione un pais");
                 // Agregar los países al modelo del JComboBox
                 while (resultSet.next()) {
-                    String pais = resultSet.getString("nombre");
+                    String pais = resultSet.getString("nomPais");
                     comboBoxModel.addElement(pais);
                 }
 
@@ -40,6 +41,33 @@ public class addAuthor extends JForm {
                 pais.setModel(comboBoxModel);
 
                 resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+        private void getSexo() {
+        try {
+            Connection conexion = conexionBD.getConexion();
+            try (Statement statement = conexion.createStatement()) {
+                String selectQuery = "SELECT nomSexo FROM sexo";
+                ResultSet resultSet2 = statement.executeQuery(selectQuery);
+
+                // Crear un modelo para el JComboBox
+                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                
+                comboBoxModel.addElement("Seleccione el sexo");
+
+                // Agregar los países al modelo del JComboBox
+                while (resultSet2.next()) {
+                    String sexo = resultSet2.getString("nomSexo");
+                    comboBoxModel.addElement(sexo);
+                }
+
+                // Establecer el modelo del JComboBox
+                sexo.setModel(comboBoxModel);
+
+                //resultSet2.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,7 +87,6 @@ public class addAuthor extends JForm {
         nombre = new javax.swing.JTextField();
         apellidoPaterno = new javax.swing.JTextField();
         apellidoMaterno = new javax.swing.JTextField();
-        fechaNacimiento = new javax.swing.JFormattedTextField();
         sexo = new javax.swing.JComboBox<>();
         pais = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -70,6 +97,7 @@ public class addAuthor extends JForm {
         jLabel6 = new javax.swing.JLabel();
         add = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        fechaNacimiento = new javax.swing.JTextField();
 
         setTitle("Agregar Autor/a");
         setResizable(false);
@@ -79,8 +107,6 @@ public class addAuthor extends JForm {
         apellidoPaterno.setPreferredSize(new java.awt.Dimension(128, 20));
 
         apellidoMaterno.setPreferredSize(new java.awt.Dimension(128, 20));
-
-        fechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         sexo.setPreferredSize(new java.awt.Dimension(128, 20));
@@ -188,43 +214,59 @@ public class addAuthor extends JForm {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addActionPerformed
         String nombreValue = nombre.getText();
-        String apellidoPaternoValue = apellidoPaterno.getText();
-        String apellidoMaternoValue = apellidoMaterno.getText();
-        String fechaNacimientoValue = fechaNacimiento.getText();
-        String sexoValue = (String) sexo.getSelectedItem(); // Obtener el país seleccionado del JComboBox
-        String paisValue = (String) pais.getSelectedItem(); // Obtener el país seleccionado del JComboBox
-        try {
-            Connection conexion = conexionBD.getConexion();
-            // Obtener el identificador del país seleccionado
-            try (Statement statement = conexion.createStatement()) {
-                // Obtener el identificador del país seleccionado
-                String selectQuery = "SELECT idPais FROM pais_origen WHERE nomPais = '" + paisValue + "'";
-                ResultSet resultSet = statement.executeQuery(selectQuery);
-                if (resultSet.next()) {
-                    int paisId = resultSet.getInt("idPais");
+    String apellidoPaternoValue = apellidoPaterno.getText();
+    String apellidoMaternoValue = apellidoMaterno.getText();
+    String fechaNacimientoValue = fechaNacimiento.getText();
+    String sexoValue = (String) sexo.getSelectedItem(); // Obtener el país seleccionado del JComboBox
+    String paisValue = (String) pais.getSelectedItem(); // Obtener el país seleccionado del JComboBox
+    
+    try {
+        Connection conexion = conexionBD.getConexion();
 
-                    // Insertar los datos en la tabla correspondiente
-                    String insertQuery = "INSERT autor (nomAut, appAut, apmAut, fechaNac, sexo, idPais) VALUES ('"
-                            + nombreValue + "', '"
-                            + apellidoPaternoValue + "', '"
-                            + apellidoMaternoValue + "', '"
-                            + fechaNacimientoValue + "', "
-                            + sexoValue + "', "
-                            + paisId + ")";
-                    statement.executeUpdate(insertQuery);
-                    JOptionPane.showMessageDialog(this, "El museo se ha agregado exitosamente.");
-                } else {
-                    JOptionPane.showMessageDialog(this, "No se encontró el país seleccionado.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                resultSet.close();
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al agregar el museo: " + e.getMessage(), "Error",
+        // Obtener el identificador del país seleccionado
+        Statement statement = conexion.createStatement();
+        
+        // Ejecutar la primera consulta (obtener idPais)
+        String selectQuery = "SELECT idPais FROM pais_origen WHERE nomPais = '" + paisValue + "'";
+        ResultSet resultSet = statement.executeQuery(selectQuery);
+        
+        // Ejecutar la segunda consulta (obtener idSexo)
+        Statement statement2 = conexion.createStatement();
+        String selectQuery2 = "SELECT idsexo FROM sexo WHERE nomSexo = '" + sexoValue + "'";
+        ResultSet resultSet2 = statement2.executeQuery(selectQuery2);
+        
+        if (resultSet.next() && resultSet2.next()) {
+            int paisId = resultSet.getInt("idPais");
+            int sexoId = resultSet2.getInt("idsexo");
+
+            // Insertar los datos en la tabla correspondiente
+            String insertQuery = "INSERT INTO autor (nomAut, appAut, apmAut, fechaNac, idSexo, idPais) VALUES ('"
+                    + nombreValue + "', '"
+                    + apellidoPaternoValue + "', '"
+                    + apellidoMaternoValue + "', '"
+                    + fechaNacimientoValue + "', "
+                    + sexoId + ", "
+                    + paisId + ")";
+            statement.executeUpdate(insertQuery);
+
+            JOptionPane.showMessageDialog(this, "El autor se ha agregado exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el país seleccionado.", "Error",
                     JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
-        dispose();
+
+        // Cerrar los ResultSet y Statements
+        resultSet.close();
+        resultSet2.close();
+        statement.close();
+        statement2.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al agregar el museo: " + e.getMessage(), "Error",
+                JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    
+    dispose();
     }// GEN-LAST:event_addActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelActionPerformed
@@ -236,7 +278,7 @@ public class addAuthor extends JForm {
     private javax.swing.JTextField apellidoMaterno;
     private javax.swing.JTextField apellidoPaterno;
     private javax.swing.JButton cancel;
-    private javax.swing.JFormattedTextField fechaNacimiento;
+    private javax.swing.JTextField fechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
