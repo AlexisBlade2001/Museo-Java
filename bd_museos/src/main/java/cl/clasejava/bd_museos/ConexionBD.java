@@ -40,6 +40,7 @@ public class ConexionBD {
         conexion = DriverManager.getConnection(
                 "jdbc:mysql://" + address + ":" + port + "/" + database,
                 user, password);
+        System.out.println(conexion);
     }
 
     /*
@@ -52,6 +53,7 @@ public class ConexionBD {
             conexion = DriverManager.getConnection(
                     "jdbc:mysql://" + address + ":" + port + "/" + database,
                     user, password);
+            
         }
         return conexion;
     }
