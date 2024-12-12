@@ -2,7 +2,7 @@ package cl.clasejava.bd_museos.add;
 
 import cl.clasejava.bd_museos.ConexionBD;
 import cl.clasejava.bd_museos.JForm;
-import java.awt.event.KeyEvent;
+//import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.sql.*;
 
@@ -28,7 +28,7 @@ public class addCountry extends JForm {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pais = new javax.swing.JTextField();
@@ -41,11 +41,6 @@ public class addCountry extends JForm {
         pais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 paisActionPerformed(evt);
-            }
-        });
-        pais.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                paisKeyPressed(evt);
             }
         });
 
@@ -68,37 +63,33 @@ public class addCountry extends JForm {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-                                                .createSequentialGroup()
-                                                .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(cancel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(pais)))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pais)))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(add)
-                                        .addComponent(cancel))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(add)
+                    .addComponent(cancel))
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -128,13 +119,13 @@ public class addCountry extends JForm {
         // TODO add your handling code here:
     }// GEN-LAST:event_paisActionPerformed
 
-    private void paisKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_paisKeyPressed
-        // TODO add your handling code here:
-        if (!(Character.isLetter(evt.getKeyChar()))
-                && !(evt.getKeyChar() == KeyEvent.VK_SPACE)) {
-            evt.consume();
-        }
-    }// GEN-LAST:event_paisKeyPressed
+//    private void paisKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_paisKeyPressed
+//        // TODO add your handling code here:
+//        if (!(Character.isLetter(evt.getKeyChar()))
+//                && !(evt.getKeyChar() == KeyEvent.VK_SPACE)) {
+//            evt.consume();
+//        }
+//    }// GEN-LAST:event_paisKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
